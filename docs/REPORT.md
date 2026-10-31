@@ -61,13 +61,13 @@ The screen is white line art on black, with no grey. It has:
 - five candles on prickets;
 - the DIABOLUS PORTATIVE title.
 
-Stop knobs light up as STOPS draws each rank. While notes are held, breath rises from the pipes, the nun lifts up to 14 px and rocks, and the candles float 13 to 24 px, bob, sway and flicker. Everything settles exactly back about half a second after release. Reduced motion keeps it all still.
+Every control shows on screen: STOPS lights the knobs, BODY raises a 16' bourdon, BITE grows the mask's horns, DRIFT leans the candles, ATTACK opens the bellows, REVERB fills the vault with arcs, DELAY and FEEDBACK send echoes. While notes are held, breath rises from the pipes, the nun lifts up to 14 px and rocks, and the candles (each one outline with its flame) float 13 to 24 px, bob and sway. On average 18 nodes change per frame while playing, none at rest, within the Open-XY guide's budget of about 20. Everything settles exactly back about half a second after release. Reduced motion keeps it all still.
 
 ## Measured vs estimated
 
 **Measured on a computer:**
 - **Host tests pass.** All 5 test files (sound, presets, continuity, bounds, display) pass through `sdk.py test`.
-- **Native Blackfin compile:** 153.4 of 2032 KiB of module memory (Diabolus 86.4 KiB).
+- **Native Blackfin compile:** 153.0 of 2032 KiB of module memory (Diabolus 85.9 KiB).
 - **MP4 audio:** no dropouts. Every 50 ms window of the encoded audio is within ±2% of the source. The only sharp onsets in the organ are the designed chiff.
 
 **Estimated only:**
@@ -93,3 +93,15 @@ python generators/panel.py .     # artwork
 - **Firmware risk.** Installing a development OS can leave the OP-XY needing a restore. Back up `/os.ldr`, `/content/op1_factory.json` and your projects first. It's built for OS 1.2.1 only.
 - **The kit's os.ldr contains your firmware.** Keep it private. It is not in the repository or the archive.
 - **The MP4 approximates the device.** The stock amp release and tremolo are emulated, so the device will differ slightly.
+
+## Open-XY guideline update (SDK PR #260)
+
+Diabolus follows the device and screen rules from etcetc000/open-xy#260:
+outlines enclose area, no turns near straight back, points at least 1/8 px
+apart, every path one subpath of at most 64 points, parts that meet share an
+outline or a pivot, text at least 8 px, captions that fit their column, every
+control visible on screen, a redraw of about 20 nodes a frame at most, and
+local copies of the SDK's inline sine and rotation so it links beside other
+machines. The CPU test kit restarts the OP-XY between runs, as the updated
+profiling guide requires. Still open from that checklist: photos and a CPU
+readout from a real OP-XY.

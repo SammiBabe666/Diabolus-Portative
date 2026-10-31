@@ -66,6 +66,19 @@ While notes are held, breath rises from the pipes, and the nun and the candles
 leave their places to float and sway; they settle back when you let go.
 With reduced motion on, nothing floats.
 
+Every control shows on the screen, following the Open-XY screen guidelines:
+
+| Control | On the screen |
+| --- | --- |
+| STOPS | The stop knobs on the wind chest light, one per rank drawn |
+| BODY | A 16' bourdon pipe rises behind the bass pipes |
+| BITE | The horns on the case's mask grow |
+| DRIFT | The candles lean, and sway further while you play |
+| ATTACK | The bellows stand open for instant speech and close as speech slows |
+| REVERB | Arcs open out to fill the vault |
+| DELAY | Echoes leave the treble pipes |
+| FEEDBACK | More echoes follow |
+
 ## How it works
 
 - **Pipes.** One cosine at the 16' pitch builds all nine partials through
@@ -100,10 +113,12 @@ Measured on a computer (`tests/`, run by `sdk.py test`):
   two-minute drone.
 - Hostile input: every control word including negative and full scale, wild
   pitches, stale voice memory, and twenty thousand random blocks.
-- The screen: every frame valid under random input, captions, knobs, the
-  floating figures settling exactly back, and reduced motion.
+- The screen: every frame valid under random input, captions that fit
+  their column, every control changing the drawing at 0, 50 and 100, the
+  redraw budget (18 changed nodes a frame on average while playing, none at
+  rest), the floating figures settling exactly back, and reduced motion.
 - The native Blackfin module compiles with the official toolchain:
-  153.4 of 2032 KiB of module memory (Diabolus 86.4 KiB, SDK 67.0 KiB).
+  153.0 of 2032 KiB of module memory (Diabolus 85.9 KiB, SDK 67.0 KiB).
 
 Not yet measured: the CPU cost on an OP-XY. The SDK's host-timed estimate is
 only a guide and swings widely between runs on a busy computer: it read about
