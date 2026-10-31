@@ -69,13 +69,57 @@ int main() {
                             sizeof(opxy::draw::Node)) == 0, "the nun's parts move together");
     // Released: everything settles exactly back within a second.
     run(input(v, 0, false, 0), 25);
-    require(!moved(diabolus::candle_node, 2 * diabolus::candle_count + diabolus::nun_count),
+    require(!moved(diabolus::candle_node, diabolus::nun_node + diabolus::nun_count - diabolus::candle_node),
             "the figures settle exactly back to rest");
 
     // Reduced motion: holding notes moves nothing but the breath.
     run(input(v, 3, false, 1), 50);
-    require(!moved(diabolus::candle_node, 2 * diabolus::candle_count + diabolus::nun_count),
+    require(!moved(diabolus::candle_node, diabolus::nun_node + diabolus::nun_count - diabolus::candle_node),
             "reduced motion keeps the figures still");
+
+    // The redraw budget: nothing changes at rest; while notes are held, about
+    // 20 changed nodes a frame on average at most (docs/ux.md, Screens).
+    {
+        static const double heavy[8] = {1, 1, 1, 1, 1, 1, 1, 1};
+        run(input(heavy, 0, false, 0), 50);
+        MFrame previous = frame;
+        run(input(heavy, 0, false, 0), 1);
+        require(std::memcmp(&previous, &frame, sizeof frame) == 0, "an idle screen is still");
+        u32 changed = 0, frames = 0, peak = 0;
+        for (int f = 0; f < 250; ++f) {
+            previous = frame;
+            run(input(heavy, 3, false, 0), 1);
+            u32 now = 0;
+            for (u32 i = 0; i < MFrame::node_count; ++i)
+                now += std::memcmp(&previous.nodes[i], &frame.nodes[i], sizeof(opxy::draw::Node)) != 0;
+            changed += now;
+            peak = now > peak ? now : peak;
+            ++frames;
+        }
+        std::printf("changed nodes per frame while held: average %.1f, peak %u\n", double(changed) / frames, peak);
+        require(changed <= 20 * frames, "the redraw stays within about 20 nodes a frame");
+        run(input(heavy, 0, false, 0), 50);
+    }
+
+    // Every control reads: at 0, 50 and 100 each one changes the drawing.
+    for (int c = 0; c < 8; ++c) {
+        double s[8] = {0.3, 0.5, 0.3, 0, 0.15, 0.3, 0.5, 0.5};
+        MFrame at[3];
+        for (int k = 0; k < 3; ++k) {
+            s[c] = k / 2.0;
+            run(input(s, 0, false, 0), 1);
+            at[k] = frame;
+        }
+        bool differs = true;
+        for (int k = 0; k < 2; ++k) {
+            bool any = false;
+            for (u32 i = diabolus::knob_node; i < MFrame::node_count; ++i)
+                any |= std::memcmp(&at[k].nodes[i], &at[k + 1].nodes[i], sizeof(opxy::draw::Node)) != 0;
+            differs &= any;
+        }
+        if (!differs) std::printf("control %d\n", c);
+        require(differs, "every control visibly changes the screen at 0, 50 and 100");
+    }
 
     // Knobs follow STOPS: none drawn beyond 8' at zero, all eight at full.
     {
@@ -100,6 +144,12 @@ int main() {
         require(std::strcmp(text, "3ms") == 0, "ATTACK at zero reads 3ms");
         diabolus::attack_caption(text, sizeof text, 2147483647);
         require(std::strcmp(text, "1.5s") == 0, "ATTACK at full reads 1.5s");
+        for (i32 v = 0; v < 2147483647 - 4194304; v += 4194304) {
+            diabolus::attack_caption(text, sizeof text, v);
+            require(std::strlen(text) <= 5, "ATTACK captions fit their column");
+        }
+        diabolus::attack_caption(text, sizeof text, 1258291200);  // about 0.3 s
+        require(text[0] == '0' && text[1] == '.' && text[4] == 's', "ATTACK reads 0.NNs under a second");
         diabolus::feedback_caption(text, sizeof text, 2147483647);
         require(std::strcmp(text, "85") == 0, "FEEDBACK at full reads 85");
         diabolus::feedback_caption(text, sizeof text, -5);

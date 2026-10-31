@@ -5,7 +5,8 @@ Every line is a thin closed ribbon (the OP-XY's renderer streaks open or
 out-and-back outlines), every number has at most four decimals, and the only
 colours are #000000 and #FFFFFF. Bound elements: header rules (nodes 0..7),
 stop knobs (8..15), breaths (16..18),
-candles (19..23), flames (24..28), the nun (29..41), text slots 0..15 and palette 0..2; see display.h."""
+candles (19..23), reverb arcs (24, 25), echoes (26..28), bourdon (29),
+bellows (30), horns (31, 32), the nun (33..45), text slots 0..15 and palette 0..2; see display.h."""
 import math, os, sys
 
 root = sys.argv[1] if len(sys.argv) > 1 else '.'
@@ -115,8 +116,9 @@ for row, (title_y, value_y, value_size) in enumerate([(10, 17.4, 20), (33, 33, 1
 FLOOR = 206
 # Three bays: a tall pointed arch behind the organ, lower arches either side,
 # all springing from slender piers that run down to the floor.
-line(pointed_arch(140, 340, 150, 40, 16), 1.2)
-line(pointed_arch(149, 331, 150, 51, 16), 0.6)
+# Fifteen steps a side keeps each ribbon within the device's 64 points.
+line(pointed_arch(140, 340, 150, 40, 15), 1.2)
+line(pointed_arch(149, 331, 150, 51, 15), 0.6)
 for x in (140, 340):
     line([(x, 118), (x, FLOOR)], 1.2)
     rect(x - 5, 146, 10, 4, B, 0.8)
@@ -144,9 +146,9 @@ for x0 in range(36, 460, 36):
     x1 = 240 + (x0 - 240) * 1.25
     line([(x0, FLOOR), (x1, 219.5)], 0.4)
 
-# Candles on iron prickets in the side bays. The stands stay put; the candles
-# (nodes 19..23) and their flames (24..28) lift off them and float while keys
-# are held. Origins: each candle's centre, each flame's base.
+# Candles on iron prickets in the side bays. The stands stay put; each candle
+# and its flame, one outline about the candle's centre (nodes 19..23), lean
+# with DRIFT and lift off to float while keys are held.
 CANDLES = [(30, 170), (62, 186), (104, 164), (428, 178), (448, 162)]
 CANDLE_W, CANDLE_H = 4.4, 13
 for x, top in CANDLES:
@@ -155,13 +157,24 @@ for x, top in CANDLES:
     shape([(x - 5, FLOOR - 4), (x + 5, FLOOR - 4), (x + 6.5, FLOOR), (x - 6.5, FLOOR)], B, 0.7)
 for x, top in CANDLES:
     figure = (x, top - CANDLE_H / 2)
-    shape([(x - CANDLE_W / 2, top - CANDLE_H + 0.8), (x - 0.6, top - CANDLE_H), (x + CANDLE_W / 2, top - CANDLE_H + 0.6),
-           (x + CANDLE_W / 2, top), (x - CANDLE_W / 2, top)], B, 0.8)
-for x, top in CANDLES:
-    base = top - CANDLE_H - 0.6
-    figure = (x, base)
-    flame = [(x + 1.4 * math.sin(math.pi * t / 8) * (1 - t / 8.0) ** 0.6 * 1.6, base - 0.8 * t) for t in range(9)]
-    shape(flame + [(2 * x - px, py) for px, py in flame[1:-1][::-1]], W, 0.3)
+    t0 = top - CANDLE_H
+    # Up the right side of the flame from the wick and down its left, with a
+    # small flat tip (no turn near straight back).
+    right = [(x + 0.4 + 1.9 * math.sin(math.pi * k / 7) * (1 - k / 7.0) ** 0.5, t0 - 0.8 - 1.0 * k) for k in range(1, 7)]
+    flame = [(x + 0.5, t0 - 0.3)] + right + [(x + 0.35, t0 - 7.6), (x - 0.35, t0 - 7.6)] + \
+            [(2 * x - px, py) for px, py in right[::-1]] + [(x - 0.5, t0 - 0.3)]
+    shape([(x - CANDLE_W / 2, top), (x - CANDLE_W / 2, t0 + 0.8), (x - 0.6, t0)] + flame +
+          [(x + 0.6, t0), (x + CANDLE_W / 2, t0 + 0.6), (x + CANDLE_W / 2, top)], B, 0.7)
+# REVERB fills the vault: two arcs inside the central arch that open out
+# from the middle of its springing line (nodes 24, 25).
+for k in range(2):
+    figure = (240, 150)
+    line(pointed_arch(160, 320, 150, 62, 13), 1.0)
+# DELAY and FEEDBACK: echoes leaving the organ, three arcs about one centre
+# beside the treble pipes (nodes 26..28).
+for r in (14, 25, 36):
+    figure = (336, 98)
+    line([(336 + r * math.cos(math.radians(a)), 98 - r * math.sin(math.radians(a))) for a in range(-32, 33, 8)], 1.4)
 figure = None
 
 # ---------------------------------------------------------------- the organ
@@ -206,16 +219,23 @@ for side in (-1, 1):
         cx, cy = pts[t]
         add('<circle cx="%s" cy="%s" r="1.4" fill="%s" stroke="%s" stroke-width="0.4"/>' % (n(cx), n(cy + 2.4), B, W))
 add('<circle cx="310" cy="192.5" r="4.6" fill="%s" stroke="%s" stroke-width="0.7"/>' % (B, W))
-shape([(305.5, 190), (302, 184.5), (307.5, 188.5)], W, 0.3)
-shape([(314.5, 190), (318, 184.5), (312.5, 188.5)], W, 0.3)
+# BITE grows the mask's horns, each from its root (nodes 31, 32): drawn below.
 shape([(307.5, 192), (309.2, 191.6), (308.4, 193)], W, 0.2)
 shape([(312.5, 192), (310.8, 191.6), (311.6, 193)], W, 0.2)
 for x in (212, 402):
     rect(x, 203, 6, 3, B, 0.8)
-# Bellows behind the bass end: a wedge with folded leather.
-shape([(196, 150), (222, 145), (222, 158), (196, 156)], B, 0.9)
-for t in (0.33, 0.66):
-    line([(196 + 26 * t, 150 - 5 * t + 1), (196 + 26 * t - 2, 153 + 2 * t)], 0.4)
+# BODY raises the 16' bourdon behind the bass pipes, growing from its foot
+# (node 29); ATTACK opens the bellows about their hinge (node 30): wide for
+# pipes that speak at once, nearly shut for slow speech.
+figure = (217.5, 148)
+rect(213, 64, 9, 84, B, 0.9)
+figure = (222, 151.5)
+shape([(196, 150), (204, 148.5), (212, 147), (222, 145), (222, 158), (212, 157.2), (204, 156.6), (196, 156)], B, 0.9)
+figure = (306.5, 189.2)
+shape([(305.5, 190), (302, 184.5), (307.5, 188.5)], W, 0.3)
+figure = (313.5, 189.2)
+shape([(314.5, 190), (318, 184.5), (312.5, 188.5)], W, 0.3)
+figure = None
 
 # --------------------------------------------------------------- the organist
 # A nun seated on a bench, in profile, facing the keys: veil, white wimple
@@ -226,6 +246,7 @@ for x in (144, 186):
     line([(x, 181), (x, FLOOR)], 1.0)
 # Everything from the habit to the hand is one figure (nodes 29 on), turning
 # about her middle when she rises off the bench.
+NUN_FIRST = next_node[0]
 figure = (176, 150)
 # Habit and veil: the veil falls from the crown over the shoulders and back.
 robe = [(150, 136), (154, 120), (159, 107), (165, 100), (172, 97), (179, 98), (184, 101), (183, 110),
@@ -254,14 +275,14 @@ shape([(176, 132), (186, 136), (198, 152), (214, 160), (222, 162), (220, 166), (
        (182, 146)], B, 0.9)
 shape([(218, 160.5), (227, 161), (229, 164), (219, 165)], W, 0.3)
 figure = None
-NUN_FIRST, NUN_COUNT = 29, next_node[0] - 29
+NUN_COUNT = next_node[0] - NUN_FIRST
 
 # ------------------------------------------------------------------ the title
 # A black plinth under the floor joints, and the name in small capitals.
-add('<path d="M168,209.5 L312,209.5 L312,220 L168,220 Z" fill="%s" stroke="%s" stroke-width="0.1"/>' % (B, B))
-for x, word in ((176, 'D I A B O L U S'), (246, 'P O R T A T I V E')):
-    add('<text transform="matrix(1 0 0 1 %d 217.5)" fill="%s" font-family="UniversNextPro-Light" '
-        'font-size="7px">%s</text>' % (x, W, word))
+add('<path d="M156,209 L324,209 L324,220 L156,220 Z" fill="%s" stroke="%s" stroke-width="0.1"/>' % (B, B))
+for x, word in ((163, 'D I A B O L U S'), (243, 'P O R T A T I V E')):
+    add('<text transform="matrix(1 0 0 1 %d 218)" fill="%s" font-family="UniversNextPro-Light" '
+        'font-size="8px">%s</text>' % (x, W, word))
 
 # ------------------------------------------------------------- bound elements
 # Stop knobs (nodes 8..15): placed on the wind chest by display.cpp.
