@@ -114,8 +114,7 @@ control at full as untested on the device.
 
 ## Try it
 
-**Install without the command line:** download the installer page from the
-[latest release](https://github.com/SammiBabe666/Diabolus-Portative/releases/latest),
+**Install without the command line:** download the [installer page](https://github.com/SammiBabe666/Diabolus-Portative/raw/main/install/Diabolus-Portative-installer.html),
 open it in Chrome, and follow [INSTALL.md](INSTALL.md). You can also play the
 organ on that page before installing anything.
 

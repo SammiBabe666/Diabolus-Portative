@@ -22,9 +22,8 @@ Open-XY build, also keep a copy of its `/os.ldr` and `/content/op1_factory.json`
 
 ## 2. Download the installer page
 
-Download **`Diabolus-Portative-installer.html`** from the
-[latest release](https://github.com/SammiBabe666/Diabolus-Portative/releases/latest)
-and open it in Chrome, Edge or Opera (on a Mac: right-click, Open With, Chrome).
+Download **[`install/Diabolus-Portative-installer.html`](https://github.com/SammiBabe666/Diabolus-Portative/raw/main/install/Diabolus-Portative-installer.html)**
+(right-click the link, Save Link As) and open it in Chrome, Edge or Opera (on a Mac: right-click, Open With, Chrome).
 It works offline. Your firmware never leaves your computer.
 
 ## 3. Follow the page
