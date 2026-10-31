@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "sdk": "1.7",
+  "kind": "synth",
+  "description": "Diabolus Portative: a sample-free medieval portative pipe organ, additive pipe ranks with its own cathedral reverb and delay.",
+  "icon": "M8 40V26 M14 40V20 M20 40V15 M26 40V11 M32 40V8 M38 40V6 M5 40H41",
+  "presetDefaults": {
+    "amp": {
+      "release": 12000
+    }
+  },
+  "presets": "presets"
+}

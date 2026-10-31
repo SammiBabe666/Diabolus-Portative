@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "id": "diabolus",
+  "name": "Diabolus Portative",
+  "parameters": [
+    {
+      "id": "stops",
+      "label": "Stops",
+      "default": 0.3,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "body",
+      "label": "Body",
+      "default": 0.5,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "bite",
+      "label": "Bite",
+      "default": 0.3,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "drift",
+      "label": "Drift",
+      "default": 0.0,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "attack",
+      "label": "Attack",
+      "control": 0,
+      "default": 0.15,
+      "mapping": {
+        "kind": "exponential",
+        "minimum": 0.003,
+        "maximum": 1.5
+      },
+      "display": "duration"
+    },
+    {
+      "id": "reverb",
+      "label": "Reverb",
+      "control": 1,
+      "default": 0.3,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "delay",
+      "label": "Delay",
+      "control": 2,
+      "default": 0.0,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "display": "percent"
+    },
+    {
+      "id": "feedback",
+      "label": "Feedback",
+      "control": 3,
+      "default": 0.3,
+      "mapping": {
+        "kind": "linear",
+        "minimum": 0,
+        "maximum": 0.85
+      },
+      "display": "percent"
+    }
+  ],
+  "presets": {
+    "Vespers": {
+      "stops": 0.22,
+      "body": 0.55,
+      "bite": 0.25,
+      "drift": 0.12,
+      "attack": 0.18,
+      "reverb": 0.35,
+      "delay": 0.0,
+      "feedback": 0.2
+    },
+    "Devils March": {
+      "stops": 0.55,
+      "body": 0.95,
+      "bite": 0.45,
+      "drift": 0.15,
+      "attack": 0.05,
+      "reverb": 0.3,
+      "delay": 0.25,
+      "feedback": 0.3
+    },
+    "Ashen": {
+      "stops": 0.15,
+      "body": 0.1,
+      "bite": 0.12,
+      "drift": 0.2,
+      "attack": 0.35,
+      "reverb": 0.85,
+      "delay": 0.0,
+      "feedback": 0.0
+    },
+    "Black Cantor": {
+      "stops": 0.4,
+      "body": 0.3,
+      "bite": 0.9,
+      "drift": 0.18,
+      "attack": 0.08,
+      "reverb": 0.4,
+      "delay": 0.35,
+      "feedback": 0.4
+    },
+    "Reliquary": {
+      "stops": 0.1,
+      "body": 0.8,
+      "bite": 0.15,
+      "drift": 0.0,
+      "attack": 0.25,
+      "reverb": 0.45,
+      "delay": 0.0,
+      "feedback": 0.2
+    },
+    "Unlit": {
+      "stops": 0.2,
+      "body": 0.4,
+      "bite": 0.15,
+      "drift": 0.2,
+      "attack": 0.7,
+      "reverb": 0.85,
+      "delay": 0.1,
+      "feedback": 0.3
+    },
+    "Adversary": {
+      "stops": 0.85,
+      "body": 0.4,
+      "bite": 0.75,
+      "drift": 0.7,
+      "attack": 0.1,
+      "reverb": 0.45,
+      "delay": 0.3,
+      "feedback": 0.55
+    },
+    "Midnight": {
+      "stops": 0.45,
+      "body": 0.6,
+      "bite": 0.4,
+      "drift": 0.15,
+      "attack": 0.1,
+      "reverb": 0.4,
+      "delay": 0.4,
+      "feedback": 0.35
+    },
+    "Endless": {
+      "stops": 1.0,
+      "body": 0.7,
+      "bite": 0.5,
+      "drift": 0.3,
+      "attack": 0.45,
+      "reverb": 0.95,
+      "delay": 0.15,
+      "feedback": 0.25
+    },
+    "Hollow Saint": {
+      "stops": 0.6,
+      "body": 0.05,
+      "bite": 0.35,
+      "drift": 0.2,
+      "attack": 0.3,
+      "reverb": 0.55,
+      "delay": 0.1,
+      "feedback": 0.3
+    },
+    "Last Office": {
+      "stops": 0.3,
+      "body": 1.0,
+      "bite": 0.05,
+      "drift": 0.3,
+      "attack": 1.0,
+      "reverb": 0.5,
+      "delay": 0.35,
+      "feedback": 0.7
+    },
+    "Diabolus": {
+      "stops": 0.8,
+      "body": 1.0,
+      "bite": 0.6,
+      "drift": 0.45,
+      "attack": 0.12,
+      "reverb": 0.6,
+      "delay": 0.35,
+      "feedback": 0.5
+    }
+  },
+  "resources": {
+    "voiceBytes": 7240,
+    "voiceAlignment": 4,
+    "voiceCapacity": 8,
+    "sharedBytes": 0,
+    "outputPeakQ31": 1073741824,
+    "display": {
+      "stateBytes": 64,
+      "stateAlignment": 4,
+      "paths": 0,
+      "points": 0,
+      "nodes": 42,
+      "texts": 16,
+      "palette": 3
+    }
+  },
+  "press": "page"
+}
