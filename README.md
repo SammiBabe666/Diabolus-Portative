@@ -11,6 +11,8 @@ pipe mouth, wind that wavers, and a cathedral reverb and tape-dark delay of its 
 (2:25). The organ is this machine's own code rendered offline, with the OP-XY's
 amp envelope and tremolo emulated; the sub bass and drums were added for the song.
 
+**Try it:** [install guide](INSTALL.md), with a browser installer page, no command line.
+
 Diabolus Portative was inspired by an idea from Franny on the Custom Operator
 Discord server. Thank you for the spark that became this instrument.
 
@@ -109,6 +111,13 @@ only a guide and swings widely between runs on a busy computer: it read about
 about 23,000 on noisy ones, against an aim of 15,000. A hardware profiling run
 is the real answer. Until one is done, treat eight-voice chords with every
 control at full as untested on the device.
+
+## Try it
+
+**Install without the command line:** download the installer page from the
+[latest release](https://github.com/SammiBabe666/Diabolus-Portative/releases/latest),
+open it in Chrome, and follow [INSTALL.md](INSTALL.md). You can also play the
+organ on that page before installing anything.
 
 ## Install on an OP-XY (at your own risk)
 
