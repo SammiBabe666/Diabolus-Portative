@@ -7,6 +7,10 @@ pipe mouth, wind that wavers, and a cathedral reverb and tape-dark delay of its 
 
 ![Diabolus Portative on the OP-XY screen](docs/diabolus.gif)
 
+**Hear it:** [a witch house tour of all twelve presets](docs/diabolus-witch-house.mp4)
+(2:25). The organ is this machine's own code rendered offline, with the OP-XY's
+amp envelope and tremolo emulated; the sub bass and drums were added for the song.
+
 Diabolus Portative was inspired by an idea from Franny on the Custom Operator
 Discord server. Thank you for the spark that became this instrument.
 
